@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo_sigma.png"> 
+    <title>SIGMA - Conferência de Materiais</title>
+    <style>
+        /* BASE & RESET */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            min-height: 100vh; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-bottom: 90px; 
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 450px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* TIPOGRAFIA E ELEMENTOS PRINCIPAIS */
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            color: #d90f23;
+            margin-bottom: 3px;
+            font-size: 1.6em;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .subtitulo {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 1em;
+            background-color: #fff;
+            cursor: pointer;
+            -webkit-appearance: none; 
+            appearance: none;
+        }
+        
+        select {
+            font-family: 'Trebuchet MS', Helvetica, sans-serif; 
+        }
+
+        /* BOTÃO */
+        button {
+            background-color: #d90f23;
+            color: white;
+            font-weight: bold;
+            border: none;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #a30b1c;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* RODAPÉS FIXOS PARA MOBILE */
+        .footer-central {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 5px 0 30px; 
+            background-color: #f4f4f9;
+            color: #555;
+            font-size: 0.65em;
+            line-height: 1.3;
+            z-index: 99;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); 
+        }
+        
+        .footer-central strong {
+            font-weight: bold;
+        }
+
+        .footer-right {
+            position: fixed; 
+            right: 10px; 
+            bottom: 5px; 
+            color: #888;
+            font-size: 0.75em;
+            z-index: 100; 
+        }
+
+        /* Media Query para telas maiores que 500px (desktop/tablet grande) */
+        @media (min-width: 500px) {
+            body {
+                padding-top: 50px;
+                padding-bottom: 90px;
+            }
+            .container {
+                padding: 30px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            .logo {
+                width: 100px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .subtitulo {
+                font-size: 0.9em;
+            }
+            .footer-central {
+                font-size: 0.7em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <img src="logo_sigma.png" alt="Logo do Sistema SIGMA" class="logo">
+    
+    <h1>SIGMA</h1>
+    <p class="subtitulo">Sistema Integrado de Gestão de Materiais</p>
+    
+    <div class="form-group">
+        <label for="posto-servico">Escolha o Posto de Serviço</label>
+        <select id="posto-servico">
+            <option value="" disabled selected>-- Selecione um Posto --</option>
+            <option value="ALFA">ALFA</option>
+            <option value="BRAVO">BRAVO</option>
+            <option value="CHARLIE">CHARLIE</option>
+            <option value="CARACARAÍ">CARACARAÍ</option>
+            <option value="RORAINÓPOLIS">RORAINÓPOLIS</option>
+            <option value="PACARAIMA">PACARAIMA</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="local-group" style="display: none;">
+        <label for="local">Escolha o Local</label>
+        <select id="local">
+            <option value="" disabled selected>-- Selecione um Local --</option>
+        </select>
+    </div>
+
+    <button id="btn-ir" disabled>INICIAR CONFERÊNCIA</button>
+
+</div>
+
+<div class="footer-central">
+    <strong>GOVERNO DE RORAIMA</strong><br>
+    <strong>CORPO DE BOMBEIROS MILITAR DE RORAIMA</strong><br>
+    <em>“Amazônia: patrimônio dos brasileiros”</em>
+</div>
+
+<div class="footer-right">
+    Criado por 3º SGT QPCBM JHONATH
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const postoSelect = document.getElementById('posto-servico');
+        const localGroup = document.getElementById('local-group');
+        const localSelect = document.getElementById('local');
+        const btnIr = document.getElementById('btn-ir');
+
+        const formsMap = {
+            'ALFA': {
+                'ABT-17': 'https://docs.google.com/forms/d/e/1FAIpQLScaIN4xEGq0FP_5s4cyMUP-OSqLyh9QZiUUAj1v2nMzymXfwg/viewform',
+                'RESGATE': 'https://docs.google.com/forms/d/e/1FAIpQLSe2CuhwbeVTt5OCm6nqWdM-kB0Xv-rChzmkA8byBqil7kHRdg/viewform',
+                'VTR CMD SOS': 'https://docs.google.com/forms/d/e/1FAIpQLSdGEdJBqe9Qadvv5TT5QfZ3Zc2KqJcbGcqwGUut0q796TJnXg/viewform',
+                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSckUGLpBsCIM_nFFS-BCPhAKbrI4CU5p6zo0juwy0Orcu0nTg/viewform',
+                'RESGATE EXTRA': 'https://docs.google.com/forms/d/e/1FAIpQLSf5TJ8w6_6DWTr1oxXgZFPIOuC0_jvpcJMF4ciqRJloaSk5WQ/viewform'
+            },
+            'BRAVO': {
+                'ABT-18': 'https://docs.google.com/forms/d/e/1FAIpQLSctaCjNUB2gDdNDXn3h4RiGOoch94CvAC5sj15D8YgzPT8Z9w/viewform',
+                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSd4paOCzbr3mjS3DEoFOBwmVTjVOrvk6NfspYJ-p1XcNtD7bg/viewform'
+            },
+            'CHARLIE': {
+                'VTR SALVAMENTO': 'https://docs.google.com/forms/d/e/1FAIpQLSfzEdboDDlJJ24oYcr3uIgWxemDzbBfIn8YqQBMJag7A-eqWA/viewform',
+                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSdEpX-ak7Lv3VQSXNkw0JeMGndJfc97Ac_3PhO95M67UHJ3Dw/viewform'
+            },
+            'CARACARAÍ': {
+                'ABT-16': 'https://docs.google.com/forms/d/e/1FAIpQLScuEX-onfOntuiCrccAj5IcPHmgijyL6bTTgFxRDH6c4VPjDg/viewform',
+                'UR 13-23': 'https://docs.google.com/forms/d/e/1FAIpQLSdPS0HfYfTcQ1w-Wd2a8r1PGsd4U3DplCA1fCf6bPNNDrogUQ/viewform',
+                'ATPS 31-21 (GBS)': 'https://docs.google.com/forms/d/e/1FAIpQLSchXqGfiGeTDC2hIpnxgxIGLkxKZziYE5go7pVcYYHGnpj9ow/viewform',
+                'ATF 01-21 (GCIF)': 'https://docs.google.com/forms/d/e/1FAIpQLSdWgjlqDH6Dt2DwM7qRgMAeC2SOSIPShCDVBZXX-T5peyu8TA/viewform',
+                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLScW4_vbkqZVKtNM02BBFMkMdpZStX-FF9OIEQkhrPS0ThVVgg/viewform'
+            },
+            'RORAINÓPOLIS': {
+                'POSTO RORAINÓPOLIS': 'LINK_DO_FORMS_RORAINOPOLIS'
+            },
+            'PACARAIMA': {
+                'POSTO PACARAIMA': 'LINK_DO_FORMS_PACARAIMA'
+            }
+        };
+
+        // Função para iniciar a navegação (só chamada pelo botão agora)
+        function navigateToForms() {
+            const formsLink = localSelect.value;
+            if (formsLink && formsLink.startsWith('http')) {
+                // Remove o foco do seletor Local (garante fechamento no mobile)
+                localSelect.blur(); 
+                window.open(formsLink, '_blank');
+            } else if (formsLink.includes('LINK_DO_FORMS')) {
+                alert('Atenção: O link para ' + localSelect.options[localSelect.selectedIndex].text + ' ainda não foi configurado. Por favor, ajuste o código!');
+            }
+        }
+        
+        // Função para atualizar as opções do menu 'Local'
+        function updateLocalOptions() {
+            const selectedPosto = postoSelect.value;
+            localSelect.innerHTML = '<option value="" disabled selected>-- Selecione um Local --</option>'; 
+            
+            // Remove o foco do primeiro seletor (garante fechamento no mobile)
+            postoSelect.blur(); 
+
+            if (selectedPosto && formsMap[selectedPosto]) {
+                const locais = formsMap[selectedPosto];
+                
+                for (const localName in locais) {
+                    const option = document.createElement('option');
+                    option.value = locais[localName];
+                    option.textContent = localName;
+                    localSelect.appendChild(option);
+                }
+
+                localGroup.style.display = 'block';
+            } else {
+                localGroup.style.display = 'none';
+            }
+
+            localSelect.value = "";
+            btnIr.disabled = true;
+        }
+
+        // 1. Listener para o menu 'Posto de Serviço' (fecha e atualiza o 2º menu)
+        postoSelect.addEventListener('change', updateLocalOptions);
+
+        // 2. Listener para o menu 'Local' (apenas fecha o menu e habilita o botão)
+        localSelect.addEventListener('change', function() {
+            btnIr.disabled = !localSelect.value;
+            
+            // Apenas remove o foco do seletor Local para fechar o menu nativo do celular
+            // A navegação só ocorrerá no clique do botão.
+            localSelect.blur(); 
+        });
+        
+        // 3. Listener para o botão (ÚNICO ponto que chama a navegação)
+        btnIr.addEventListener('click', navigateToForms);
+
+        updateLocalOptions();
+    });
+</script>
+
+</body>
+</html>
