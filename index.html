@@ -103,18 +103,22 @@
             margin-right: auto;
         }
 
+        /* AJUSTE AQUI: Inclusão da linha discreta no H1 */
         h1 {
             color: #d90f23;
             margin-bottom: 3px;
             font-size: 1.6em;
-            padding-bottom: 0;
-            border-bottom: none;
+            padding-bottom: 5px; /* Espaçamento entre o texto e a linha */
+            border-bottom: 1px solid #e0e0e0; /* Linha discreta (cinza claro) */
+            margin-bottom: 10px; /* Espaçamento após a linha */
         }
+        /* FIM DO AJUSTE */
         
         .subtitulo {
             font-size: 0.8em;
             color: #666;
-            margin-bottom: 20px;
+            /* Reduzido de 20px para compensar o novo margin-bottom do h1 */
+            margin-bottom: 15px; 
             font-weight: 600;
         }
 
@@ -174,7 +178,6 @@
             left: 0;
             width: 100%;
             text-align: center;
-            /* Reduzido o padding-bottom pois o texto do autor será incluído */
             padding: 5px 0 5px; 
             background-color: #f4f4f9;
             color: #555;
@@ -193,12 +196,9 @@
             display: block;
             margin-top: 10px; /* Cria a linha vazia (espaçamento) */
             color: #888;
-            font-size: 0.9em; /* ligeiramente maior que o texto da corporação */
+            font-size: 0.9em; 
         }
-        /* Fim dos ajustes no rodapé */
         
-        /* O estilo .footer-right foi removido, pois o conteúdo foi integrado */
-
         /* Media Query para telas maiores que 500px (desktop/tablet grande) */
         @media (min-width: 500px) {
             body {
@@ -278,6 +278,7 @@
         Elaborado por: 3º SGT QPCBM JHONATH
     </span>
 </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
