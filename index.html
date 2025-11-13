@@ -55,29 +55,25 @@
             color: white;
         }
 
-        /* AJUSTE AQUI: O novo vermelho mais claro para o texto no cabeçalho */
+        /* O novo vermelho mais claro para o texto no cabeçalho */
         .text-red { 
-            color: #FF3B3B; /* Vermelho mais claro e vivo */
+            color: #FF3B3B; 
         }
-        /* FIM DO AJUSTE */
 
         /* Regras de Visibilidade */
-
-        /* 1. Por padrão (Mobile First), exibe apenas o texto MOBILE (CBMRR) */
         .header-title-desktop {
-            display: none; /* Oculta o desktop por padrão */
+            display: none; 
         }
         .header-title-mobile {
-            display: block; /* Exibe o mobile por padrão */
+            display: block; 
         }
         
-        /* 2. Em telas maiores (Desktop), exibe apenas o texto DESKTOP (CORPO DE BOMBEIROS...) */
-        @media (min-width: 768px) { /* Ponto de quebra para desktop */
+        @media (min-width: 768px) { 
             .header-title-desktop {
-                display: block; /* Exibe o texto desktop */
+                display: block; 
             }
             .header-title-mobile {
-                display: none; /* Oculta o texto mobile */
+                display: none; 
             }
             .header-title-desktop {
                 font-size: 1.2em;
@@ -108,7 +104,7 @@
         }
 
         h1 {
-            color: #d90f23; /* Mantém o vermelho escuro original para o h1, se desejar */
+            color: #d90f23;
             margin-bottom: 3px;
             font-size: 1.6em;
             padding-bottom: 0;
@@ -178,7 +174,8 @@
             left: 0;
             width: 100%;
             text-align: center;
-            padding: 5px 0 30px; 
+            /* Reduzido o padding-bottom pois o texto do autor será incluído */
+            padding: 5px 0 5px; 
             background-color: #f4f4f9;
             color: #555;
             font-size: 0.65em;
@@ -191,19 +188,21 @@
             font-weight: bold;
         }
 
-        .footer-right {
-            position: fixed; 
-            right: 10px; 
-            bottom: 5px; 
+        /* Novo estilo para o separador e o texto do autor */
+        .footer-autor {
+            display: block;
+            margin-top: 10px; /* Cria a linha vazia (espaçamento) */
             color: #888;
-            font-size: 0.75em;
-            z-index: 100; 
+            font-size: 0.9em; /* ligeiramente maior que o texto da corporação */
         }
+        /* Fim dos ajustes no rodapé */
+        
+        /* O estilo .footer-right foi removido, pois o conteúdo foi integrado */
 
         /* Media Query para telas maiores que 500px (desktop/tablet grande) */
         @media (min-width: 500px) {
             body {
-                padding-top: 70px; /* Aumentado o padding-top para telas maiores também */
+                padding-top: 70px;
                 padding-bottom: 90px;
             }
             .container {
@@ -274,12 +273,11 @@
     <strong>GOVERNO DE RORAIMA</strong><br>
     <strong>CORPO DE BOMBEIROS MILITAR DE RORAIMA</strong><br>
     <em>“Amazônia: patrimônio dos brasileiros”</em>
+    
+    <span class="footer-autor">
+        Elaborado por: 3º SGT QPCBM JHONATH
+    </span>
 </div>
-
-<div class="footer-right">
-    Criado por 3º SGT QPCBM JHONATH
-</div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
