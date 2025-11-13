@@ -18,9 +18,72 @@
             align-items: center;
             justify-content: flex-start;
             padding-bottom: 90px; 
-            padding-top: 20px;
+            padding-top: 60px; /* Ajuste para compensar o header fixo */
             box-sizing: border-box;
         }
+
+        /* NOVO ESTILO: Cabeçalho com tarja vinho */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; /* Altura da tarja */
+            background-color: #800020; /* Cor Vinho (ex: #800020, #900C3F) */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 100; /* Garante que fique acima de outros elementos */
+            display: flex;
+            align-items: center; /* Alinha verticalmente o ícone e o texto */
+            padding: 0 15px; /* Espaçamento interno */
+            box-sizing: border-box;
+            gap: 10px; /* Espaço entre o ícone e o texto */
+        }
+        
+        .header-icon {
+            height: 40px; /* Tamanho do ícone */
+            width: auto;
+        }
+
+        /* Estilos para o texto do cabeçalho */
+        .header-title-desktop, .header-title-mobile {
+            font-weight: bold;
+            font-size: 1.1em;
+            line-height: 1.2;
+        }
+        
+        .text-white {
+            color: white;
+        }
+
+        /* AJUSTE AQUI: O novo vermelho mais claro para o texto no cabeçalho */
+        .text-red { 
+            color: #FF3B3B; /* Vermelho mais claro e vivo */
+        }
+        /* FIM DO AJUSTE */
+
+        /* Regras de Visibilidade */
+
+        /* 1. Por padrão (Mobile First), exibe apenas o texto MOBILE (CBMRR) */
+        .header-title-desktop {
+            display: none; /* Oculta o desktop por padrão */
+        }
+        .header-title-mobile {
+            display: block; /* Exibe o mobile por padrão */
+        }
+        
+        /* 2. Em telas maiores (Desktop), exibe apenas o texto DESKTOP (CORPO DE BOMBEIROS...) */
+        @media (min-width: 768px) { /* Ponto de quebra para desktop */
+            .header-title-desktop {
+                display: block; /* Exibe o texto desktop */
+            }
+            .header-title-mobile {
+                display: none; /* Oculta o texto mobile */
+            }
+            .header-title-desktop {
+                font-size: 1.2em;
+            }
+        }
+        /* Fim dos estilos do cabeçalho */
 
         .container {
             background-color: #fff;
@@ -45,7 +108,7 @@
         }
 
         h1 {
-            color: #d90f23;
+            color: #d90f23; /* Mantém o vermelho escuro original para o h1, se desejar */
             margin-bottom: 3px;
             font-size: 1.6em;
             padding-bottom: 0;
@@ -140,7 +203,7 @@
         /* Media Query para telas maiores que 500px (desktop/tablet grande) */
         @media (min-width: 500px) {
             body {
-                padding-top: 50px;
+                padding-top: 70px; /* Aumentado o padding-top para telas maiores também */
                 padding-bottom: 90px;
             }
             .container {
@@ -165,6 +228,17 @@
 </head>
 <body>
 
+<header class="main-header">
+    <img src="cbmrr.png" alt="Ícone CBM-RR" class="header-icon">
+    
+    <div class="header-title-desktop">
+        <span class="text-white">CORPO DE BOMBEIROS MILITAR </span><span class="text-red">RORAIMA</span>
+    </div>
+    
+    <div class="header-title-mobile">
+        <span class="text-white">CBM</span><span class="text-red">RR</span>
+    </div>
+</header>
 <div class="container">
     
     <img src="logo_sigma.png" alt="Logo do Sistema SIGMA" class="logo">
@@ -307,4 +381,3 @@
 </body>
 
 </html>
-
