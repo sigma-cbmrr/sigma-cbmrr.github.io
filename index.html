@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="logo_sigma.png"> 
+    <!-- Removido 'logo_sigma.png' do href, pois não está disponível no ambiente -->
+    <link rel="icon" type="image/png" href="https://placehold.co/16x16/800020/ffffff?text=S"> 
     <title>SIGMA - Conferência de Materiais</title>
     <style>
         /* BASE & RESET */
@@ -29,7 +30,7 @@
             left: 0;
             width: 100%;
             height: 50px; /* Altura da tarja */
-            background-color: #800020; /* Cor Vinho (ex: #800020, #900C3F) */
+            background-color: #800020; /* Cor Vinho */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 100; /* Garante que fique acima de outros elementos */
             display: flex;
@@ -117,10 +118,88 @@
         .subtitulo {
             font-size: 0.8em;
             color: #666;
-            /* Reduzido de 20px para compensar o novo margin-bottom do h1 */
-            margin-bottom: 15px; 
+            margin-bottom: 15px;  
             font-weight: 600;
         }
+        
+        /* --- NOVOS ESTILOS PARA STEP INDICATOR (PASSO A PASSO) --- */
+        .step-indicator {
+            display: flex;
+            justify-content: center; /* Centralizado sem labels */
+            align-items: center;
+            margin: 15px 0 30px; /* Espaçamento superior e inferior */
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .step-item {
+            text-align: center;
+            flex-grow: 0; /* Não cresce mais */
+            position: relative;
+            z-index: 2; /* Para o círculo ficar acima da linha */
+            margin: 0 20px; /* Espaçamento entre os círculos */
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            margin: 0 auto;
+            font-weight: bold;
+            color: #fff;
+            border: 2px solid #ccc;
+            background-color: #aaa; /* Default inactive */
+            transition: background-color 0.4s, border-color 0.4s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.1em;
+        }
+
+        /* Estilo para o passo ATIVO */
+        .step-item.active .step-circle {
+            background-color: #d90f23;
+            border-color: #d90f23;
+        }
+
+        /* Estilo para o passo CONCLUÍDO (Passo 1 depois de selecionar) */
+        .step-item.complete .step-circle {
+            background-color: #1b8a3e; /* Verde de Sucesso */
+            border-color: #1b8a3e;
+        }
+
+        /* Oculta as labels */
+        .step-label {
+            display: none;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 15px; /* Metade da altura do circle */
+            left: calc(50% - 35px); /* Ajuste para centralizar a linha entre os círculos */
+            width: 70px; /* Largura fixa da linha */
+            height: 2px;
+            background-color: #ccc;
+            z-index: 1;
+        }
+        
+        /* Linha de progresso (a parte que muda de cor) */
+        .step-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%; /* Será controlado pelo JS */
+            background-color: #d90f23;
+            transition: width 0.4s ease;
+        }
+
+        /* Classe para mostrar o progresso */
+        .step-indicator.progress-1 .step-line::after {
+            width: 100%; /* Linha cheia até o Step 2 */
+            background-color: #1b8a3e; /* Cor da linha de progresso concluído */
+        }
+        /* --- FIM DOS ESTILOS STEP INDICATOR --- */
 
         .form-group {
             margin-bottom: 15px;
@@ -194,7 +273,7 @@
         /* Novo estilo para o separador e o texto do autor */
         .footer-autor {
             display: block;
-            margin-top: 10px; /* Cria a linha vazia (espaçamento) */
+            margin-top: 10px; 
             color: #888;
             font-size: 0.9em; 
         }
@@ -228,7 +307,8 @@
 <body>
 
 <header class="main-header">
-    <img src="cbmrr.png" alt="Ícone CBM-RR" class="header-icon">
+    <!-- Imagem de placeholder simples para o ícone CBM-RR -->
+    <img src="https://placehold.co/40x40/ffffff/800020?text=CBM" alt="Ícone CBM-RR" class="header-icon" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/800020?text=CBM'">
     
     <div class="header-title-desktop">
         <span class="text-white">CORPO DE BOMBEIROS MILITAR </span><span class="text-red">RORAIMA</span>
@@ -240,32 +320,57 @@
 </header>
 <div class="container">
     
-    <img src="logo_sigma.png" alt="Logo do Sistema SIGMA" class="logo">
+    <!-- Imagem de placeholder simples para o logo SIGMA -->
+    <img src="https://placehold.co/80x80/d90f23/ffffff?text=SIGMA" alt="Logo do Sistema SIGMA" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/80x80/d90f23/ffffff?text=SIGMA'">
     
     <h1>SIGMA</h1>
     <p class="subtitulo">Sistema Integrado de Gestão de Materiais</p>
     
-    <div class="form-group">
-        <label for="posto-servico">Escolha o Posto de Serviço</label>
-        <select id="posto-servico">
-            <option value="" disabled selected>-- Selecione um Posto --</option>
-            <option value="ALFA">ALFA</option>
-            <option value="BRAVO">BRAVO</option>
-            <option value="CHARLIE">CHARLIE</option>
-            <option value="CARACARAÍ">CARACARAÍ</option>
-            <option value="RORAINÓPOLIS">RORAINÓPOLIS</option>
-            <option value="PACARAIMA">PACARAIMA</option>
-        </select>
+    <!-- NOVO: Indicador de Passo a Passo (Sem labels) -->
+    <div class="step-indicator progress-0" id="step-indicator">
+        <!-- Passo 1: Posto de Serviço (Inicia como Ativo) -->
+        <div class="step-item active" id="step-item-1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Posto de Serviço</div> <!-- Label escondida por CSS -->
+        </div>
+        
+        <div class="step-line"></div>
+
+        <!-- Passo 2: Local de Conferência (Inicia como Inativo) -->
+        <div class="step-item" id="step-item-2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Local de Conferência</div> <!-- Label escondida por CSS -->
+        </div>
+    </div>
+    <!-- FIM NOVO: Indicador de Passo a Passo -->
+
+    <!-- Conteúdo do Passo 1: Posto de Serviço (Visível inicialmente) -->
+    <div id="step-1-content">
+        <div class="form-group">
+            <label for="posto-servico">Escolha o Posto de Serviço</label>
+            <select id="posto-servico">
+                <option value="" disabled selected>-- Selecione um Posto --</option>
+                <option value="ALFA">ALFA</option>
+                <option value="BRAVO">BRAVO</option>
+                <option value="CHARLIE">CHARLIE</option>
+                <option value="CARACARAÍ">CARACARAÍ</option>
+                <option value="RORAINÓPOLIS">RORAINÓPOLIS</option>
+                <option value="PACARAIMA">PACARAIMA</option>
+            </select>
+        </div>
     </div>
 
-    <div class="form-group" id="local-group" style="display: none;">
-        <label for="local">Escolha o Local</label>
-        <select id="local">
-            <option value="" disabled selected>-- Selecione um Local --</option>
-        </select>
-    </div>
+    <!-- Conteúdo do Passo 2: Local de Conferência e Botão (Inicia Oculto) -->
+    <div id="step-2-content" style="display: none;">
+        <div class="form-group">
+            <label for="local">Escolha o Local</label>
+            <select id="local">
+                <option value="" disabled selected>-- Selecione um Local --</option>
+            </select>
+        </div>
 
-    <button id="btn-ir" disabled>INICIAR CONFERÊNCIA</button>
+        <button id="btn-ir" disabled>INICIAR CONFERÊNCIA</button>
+    </div>
 
 </div>
 
@@ -283,9 +388,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const postoSelect = document.getElementById('posto-servico');
-        const localGroup = document.getElementById('local-group');
         const localSelect = document.getElementById('local');
         const btnIr = document.getElementById('btn-ir');
+        const step2Content = document.getElementById('step-2-content');
+        
+        // Novos elementos do passo a passo
+        const stepIndicator = document.getElementById('step-indicator');
+        const stepItem1 = document.getElementById('step-item-1');
+        const stepItem2 = document.getElementById('step-item-2');
 
         const formsMap = {
             'ALFA': {
@@ -319,24 +429,39 @@
             }
         };
 
-        // Função para iniciar a navegação (só chamada pelo botão agora)
         function navigateToForms() {
             const formsLink = localSelect.value;
             if (formsLink && formsLink.startsWith('http')) {
-                // Remove o foco do seletor Local (garante fechamento no mobile)
                 localSelect.blur(); 
                 window.open(formsLink, '_blank');
             } else if (formsLink.includes('LINK_DO_FORMS')) {
-                alert('Atenção: O link para ' + localSelect.options[localSelect.selectedIndex].text + ' ainda não foi configurado. Por favor, ajuste o código!');
+                // Substituído alert() por console.error, pois alert é bloqueado em iframes
+                console.error('Atenção: O link para ' + localSelect.options[localSelect.selectedIndex].text + ' ainda não foi configurado.');
+                // Pode adicionar uma mensagem na tela usando um elemento modal ou div
             }
         }
         
-        // Função para atualizar as opções do menu 'Local'
+        function updateStepIndicator(isStep1Complete) {
+            if (isStep1Complete) {
+                // Passo 1 Completo, Passo 2 Ativo
+                stepItem1.classList.remove('active');
+                stepItem1.classList.add('complete');
+                stepItem2.classList.add('active');
+                stepItem2.classList.remove('complete');
+                stepIndicator.classList.add('progress-1');
+            } else {
+                // Passo 1 Ativo, Passo 2 Inativo
+                stepItem1.classList.add('active');
+                stepItem1.classList.remove('complete');
+                stepItem2.classList.remove('active', 'complete');
+                stepIndicator.classList.remove('progress-1');
+            }
+        }
+
         function updateLocalOptions() {
             const selectedPosto = postoSelect.value;
             localSelect.innerHTML = '<option value="" disabled selected>-- Selecione um Local --</option>'; 
             
-            // Remove o foco do primeiro seletor (garante fechamento no mobile)
             postoSelect.blur(); 
 
             if (selectedPosto && formsMap[selectedPosto]) {
@@ -349,9 +474,13 @@
                     localSelect.appendChild(option);
                 }
 
-                localGroup.style.display = 'block';
+                // MOSTRA O PASSO 2 (Local de Conferência e Botão)
+                step2Content.style.display = 'block';
+                updateStepIndicator(true); // Atualiza o indicador para 1 CONCLUÍDO e 2 ATIVO
             } else {
-                localGroup.style.display = 'none';
+                // ESCONDE O PASSO 2
+                step2Content.style.display = 'none';
+                updateStepIndicator(false); // Atualiza o indicador para 1 ATIVO
             }
 
             localSelect.value = "";
@@ -361,19 +490,18 @@
         // 1. Listener para o menu 'Posto de Serviço' (fecha e atualiza o 2º menu)
         postoSelect.addEventListener('change', updateLocalOptions);
 
-        // 2. Listener para o menu 'Local' (apenas fecha o menu e habilita o botão)
+        // 2. Listener para o menu 'Local' (habilita o botão)
         localSelect.addEventListener('change', function() {
             btnIr.disabled = !localSelect.value;
-            
-            // Apenas remove o foco do seletor Local para fechar o menu nativo do celular
-            // A navegação só ocorrerá no clique do botão.
             localSelect.blur(); 
         });
         
         // 3. Listener para o botão (ÚNICO ponto que chama a navegação)
         btnIr.addEventListener('click', navigateToForms);
 
+        // Inicializa o estado (Passo 1 Ativo, Passo 2 Oculto)
         updateLocalOptions();
+        updateStepIndicator(false); // Garante que começa no passo 1
     });
 </script>
 
