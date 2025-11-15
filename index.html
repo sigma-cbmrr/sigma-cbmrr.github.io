@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Removido 'logo_sigma.png' do href, pois não está disponível no ambiente -->
-    <link rel="icon" type="image/png" href="https://placehold.co/16x16/800020/ffffff?text=S"> 
+    <!-- Referência do Favicon restaurada para tentar carregar o arquivo, com fallback para placeholder -->
+    <link rel="icon" type="image/png" href="logo_sigma_favicon.png" onerror="this.href='https://placehold.co/16x16/800020/ffffff?text=S'">
     <title>SIGMA - Conferência de Materiais</title>
     <style>
         /* BASE & RESET */
@@ -104,7 +104,6 @@
             margin-right: auto;
         }
 
-        /* AJUSTE AQUI: Inclusão da linha discreta no H1 */
         h1 {
             color: #d90f23;
             margin-bottom: 3px;
@@ -113,7 +112,6 @@
             border-bottom: 1px solid #e0e0e0; /* Linha discreta (cinza claro) */
             margin-bottom: 10px; /* Espaçamento após a linha */
         }
-        /* FIM DO AJUSTE */
         
         .subtitulo {
             font-size: 0.8em;
@@ -167,7 +165,7 @@
             border-color: #1b8a3e;
         }
 
-        /* Oculta as labels */
+        /* Oculta as labels dos passos, conforme solicitado */
         .step-label {
             display: none;
         }
@@ -307,8 +305,9 @@
 <body>
 
 <header class="main-header">
-    <!-- Imagem de placeholder simples para o ícone CBM-RR -->
-    <img src="https://placehold.co/40x40/ffffff/800020?text=CBM" alt="Ícone CBM-RR" class="header-icon" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/800020?text=CBM'">
+    <!-- Referência do Ícone CBM-RR restaurada para o nome do arquivo, com fallback -->
+    <img src="logo_cbmrr.png" alt="Ícone CBM-RR" class="header-icon" 
+         onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/800020/fff?text=CBM'">
     
     <div class="header-title-desktop">
         <span class="text-white">CORPO DE BOMBEIROS MILITAR </span><span class="text-red">RORAIMA</span>
@@ -320,18 +319,19 @@
 </header>
 <div class="container">
     
-    <!-- Imagem de placeholder simples para o logo SIGMA -->
-    <img src="https://placehold.co/80x80/d90f23/ffffff?text=SIGMA" alt="Logo do Sistema SIGMA" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/80x80/d90f23/ffffff?text=SIGMA'">
+    <!-- Referência do Logo SIGMA restaurada para o nome do arquivo, com fallback -->
+    <img src="logo_sigma.png" alt="Logo do Sistema SIGMA" class="logo" 
+         onerror="this.onerror=null; this.src='https://placehold.co/80x80/d90f23/ffffff?text=SIGMA'">
     
     <h1>SIGMA</h1>
     <p class="subtitulo">Sistema Integrado de Gestão de Materiais</p>
     
-    <!-- NOVO: Indicador de Passo a Passo (Sem labels) -->
+    <!-- Indicador de Passo a Passo (Sem labels) -->
     <div class="step-indicator progress-0" id="step-indicator">
         <!-- Passo 1: Posto de Serviço (Inicia como Ativo) -->
         <div class="step-item active" id="step-item-1">
             <div class="step-circle">1</div>
-            <div class="step-label">Posto de Serviço</div> <!-- Label escondida por CSS -->
+            <div class="step-label">Posto de Serviço</div> 
         </div>
         
         <div class="step-line"></div>
@@ -339,7 +339,7 @@
         <!-- Passo 2: Local de Conferência (Inicia como Inativo) -->
         <div class="step-item" id="step-item-2">
             <div class="step-circle">2</div>
-            <div class="step-label">Local de Conferência</div> <!-- Label escondida por CSS -->
+            <div class="step-label">Local de Conferência</div> 
         </div>
     </div>
     <!-- FIM NOVO: Indicador de Passo a Passo -->
@@ -435,9 +435,8 @@
                 localSelect.blur(); 
                 window.open(formsLink, '_blank');
             } else if (formsLink.includes('LINK_DO_FORMS')) {
-                // Substituído alert() por console.error, pois alert é bloqueado em iframes
+                // Mensagem de erro no console, pois alert() é desabilitado
                 console.error('Atenção: O link para ' + localSelect.options[localSelect.selectedIndex].text + ' ainda não foi configurado.');
-                // Pode adicionar uma mensagem na tela usando um elemento modal ou div
             }
         }
         
