@@ -159,7 +159,7 @@
             border-color: #d90f23;
         }
 
-        /* Estilo para o passo CONCLUÍDO (Passo 1 depois de selecionar) */
+        /* Estilo para o passo CONCLUÍDO (Verde de Sucesso) */
         .step-item.complete .step-circle {
             background-color: #1b8a3e; /* Verde de Sucesso */
             border-color: #1b8a3e;
@@ -192,8 +192,8 @@
             transition: width 0.4s ease;
         }
 
-        /* Classe para mostrar o progresso */
-        .step-indicator.progress-1 .step-line::after {
+        /* Classe para mostrar o progresso: 1 completo e 2 completo (Linha fica verde) */
+        .step-indicator.progress-2 .step-line::after {
             width: 100%; /* Linha cheia até o Step 2 */
             background-color: #1b8a3e; /* Cor da linha de progresso concluído */
         }
@@ -440,20 +440,31 @@
             }
         }
         
-        function updateStepIndicator(isStep1Complete) {
+        // Função para atualizar o status visual dos passos
+        function updateStepIndicator(isStep1Complete, isStep2Complete) {
+            // Passo 1
             if (isStep1Complete) {
-                // Passo 1 Completo, Passo 2 Ativo
                 stepItem1.classList.remove('active');
                 stepItem1.classList.add('complete');
-                stepItem2.classList.add('active');
-                stepItem2.classList.remove('complete');
-                stepIndicator.classList.add('progress-1');
             } else {
-                // Passo 1 Ativo, Passo 2 Inativo
                 stepItem1.classList.add('active');
                 stepItem1.classList.remove('complete');
-                stepItem2.classList.remove('active', 'complete');
+            }
+
+            // Passo 2
+            if (isStep2Complete) {
+                stepItem2.classList.add('complete');
+                stepItem2.classList.remove('active');
                 stepIndicator.classList.remove('progress-1');
+                stepIndicator.classList.add('progress-2'); // Linha fica verde
+            } else if (isStep1Complete) {
+                stepItem2.classList.add('active'); // Fica vermelho/ativo se o Passo 1 estiver completo
+                stepItem2.classList.remove('complete');
+                stepIndicator.classList.add('progress-2'); // A linha fica ativa/vermelha até aqui, mas o círculo não fica verde
+                stepIndicator.classList.remove('progress-2');
+            } else {
+                stepItem2.classList.remove('active', 'complete');
+                stepIndicator.classList.remove('progress-2');
             }
         }
 
@@ -475,11 +486,11 @@
 
                 // MOSTRA O PASSO 2 (Local de Conferência e Botão)
                 step2Content.style.display = 'block';
-                updateStepIndicator(true); // Atualiza o indicador para 1 CONCLUÍDO e 2 ATIVO
+                updateStepIndicator(true, false); // Passo 1 Completo, Passo 2 Inativo
             } else {
                 // ESCONDE O PASSO 2
                 step2Content.style.display = 'none';
-                updateStepIndicator(false); // Atualiza o indicador para 1 ATIVO
+                updateStepIndicator(false, false); // Passo 1 Inativo, Passo 2 Inativo
             }
 
             localSelect.value = "";
@@ -489,10 +500,14 @@
         // 1. Listener para o menu 'Posto de Serviço' (fecha e atualiza o 2º menu)
         postoSelect.addEventListener('change', updateLocalOptions);
 
-        // 2. Listener para o menu 'Local' (habilita o botão)
+        // 2. Listener para o menu 'Local' (habilita o botão E ATUALIZA PASSO 2)
         localSelect.addEventListener('change', function() {
-            btnIr.disabled = !localSelect.value;
+            const isLocalSelected = !!localSelect.value;
+            btnIr.disabled = !isLocalSelected;
             localSelect.blur(); 
+
+            // Se o local for selecionado, o Passo 2 está completo
+            updateStepIndicator(true, isLocalSelected);
         });
         
         // 3. Listener para o botão (ÚNICO ponto que chama a navegação)
@@ -500,12 +515,10 @@
 
         // Inicializa o estado (Passo 1 Ativo, Passo 2 Oculto)
         updateLocalOptions();
-        updateStepIndicator(false); // Garante que começa no passo 1
+        updateStepIndicator(false, false); // Garante que começa no passo 1
     });
 </script>
 
 </body>
 
 </html>
-
-
