@@ -316,6 +316,10 @@
             color: white;
             border-color: #d90f23;
         }
+
+        #step-0-content {
+            margin-top: 20px;
+        }
         
         /* Media Query para telas maiores que 500px (desktop/tablet grande) */
         @media (min-width: 500px) {
@@ -386,14 +390,13 @@
     <!-- FIM NOVO: Indicador de Passo a Passo -->
 
     <div id="step-0-content">
-        <label>O que deseja realizar?</label>
-        <div class="choice-container">
-            <div class="btn-choice" id="choice-materiais" onclick="selectFlow('MATERIAIS')">
-                CONFERÊNCIA DE MATERIAIS
-            </div>
-            <div class="btn-choice" id="choice-viaturas" onclick="selectFlow('VIATURAS')">
-                CHECKLIST DE VIATURA
-            </div>
+        <div class="form-group">
+            <label for="fluxo-select">O que deseja realizar?</label>
+            <select id="fluxo-select">
+                <option value="" disabled selected>-- Selecione uma Ação --</option>
+                <option value="MATERIAIS">CONFERÊNCIA DE MATERIAIS</option>
+                <option value="VIATURAS">CHECKLIST DE VIATURA</option>
+            </select>
         </div>
     </div>
     
@@ -443,6 +446,7 @@
 
 <script>
    document.addEventListener('DOMContentLoaded', function() {
+       const fluxoSelect = document.getElementById('fluxo-select');
         const postoSelect = document.getElementById('posto-servico');
         const localSelect = document.getElementById('local');
         const btnIr = document.getElementById('btn-ir');
@@ -551,21 +555,19 @@
             else if (p1) indicator.classList.add('progress-1');
         }
 
-        window.selectFlow = function(tipo) {
-            fluxoSelecionado = tipo;
+        // Novo Listener para o primeiro passo (Escolha da Ação)
+        fluxoSelect.addEventListener('change', function() {
+            fluxoSelecionado = fluxoSelect.value;
             
-            // Visual dos botões
-            document.getElementById('choice-materiais').classList.toggle('selected', tipo === 'MATERIAIS');
-            document.getElementById('choice-viaturas').classList.toggle('selected', tipo === 'VIATURAS');
-
-            // Esconde Passo 0 e mostra Passo 1
-            document.getElementById('step-0-content').style.display = 'none';
-            document.getElementById('step-1-content').style.display = 'block';
-            
-            // Reseta o select de postos para obrigar nova escolha
-            postoSelect.value = "";
-            updateStepIndicator(true, false, false); 
-        };
+            if (fluxoSelecionado) {
+                // Esconde o select atual e mostra o próximo (Posto)
+                document.getElementById('step-0-content').style.display = 'none';
+                document.getElementById('step-1-content').style.display = 'block';
+                
+                // Marca o Passo 1 como concluído e o 2 como ativo
+                updateStepIndicator(true, false, false);
+            }
+        });
         
         function updateLocalOptions() {
             const selectedPosto = postoSelect.value;
