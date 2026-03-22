@@ -174,8 +174,8 @@
             position: absolute;
             top: 15px;
             left: 50%;
-            transform: translateX(-50%); /* Centraliza a linha no container */
-            width: 160px; /* Aumentado para cobrir a distância entre os 3 círculos */
+            transform: translateX(-50%);
+            width: 80%; /* Ajustado para abranger os 3 círculos */
             height: 2px;
             background-color: #ccc;
             z-index: 1;
@@ -370,17 +370,17 @@
     <!-- Indicador de Passo a Passo (Sem labels) -->
     <div class="step-indicator progress-0" id="step-indicator">
         <div class="step-item active" id="step-item-0">
-            <div class="step-circle">0</div>
+            <div class="step-circle">1</div>
         </div>
         
         <div class="step-line"></div>
 
         <div class="step-item" id="step-item-1">
-            <div class="step-circle">1</div>
+            <div class="step-circle">2</div>
         </div>
 
         <div class="step-item" id="step-item-2">
-            <div class="step-circle">2</div>
+            <div class="step-circle">3</div>
         </div>
     </div>
     <!-- FIM NOVO: Indicador de Passo a Passo -->
@@ -540,12 +540,12 @@
             const it1 = document.getElementById('step-item-1');
             const it2 = document.getElementById('step-item-2');
 
-            // Lógica de classes
+            // Lógica de classes: Define quem é Verde (complete) ou Vermelho (active)
             it0.className = 'step-item ' + (p0 ? 'complete' : 'active');
             it1.className = 'step-item ' + (p1 ? 'complete' : (p0 ? 'active' : ''));
             it2.className = 'step-item ' + (p2 ? 'complete' : (p1 ? 'active' : ''));
 
-            // Linha de progresso
+            // Controla a linha de progresso
             indicator.className = 'step-indicator';
             if (p2) indicator.classList.add('progress-2');
             else if (p1) indicator.classList.add('progress-1');
@@ -591,25 +591,26 @@
             }
         }
 
-        // 1. Listener para o menu 'Posto de Serviço' (fecha e atualiza o 2º menu)
+        // 1. Listener para o menu 'Posto de Serviço'
         postoSelect.addEventListener('change', updateLocalOptions);
 
-        // 2. Listener para o menu 'Local' (habilita o botão E ATUALIZA PASSO 2)
+        // 2. Listener para o menu 'Local'
         localSelect.addEventListener('change', function() {
             const isLocalSelected = !!localSelect.value;
             btnIr.disabled = !isLocalSelected;
-            localSelect.blur(); 
-
-            // Se o local for selecionado, o Passo 2 está completo
-            updateStepIndicator(true, isLocalSelected);
+            
+            if (isLocalSelected) {
+                // Se escolheu o local, Passo 1 e 2 estão completos (Verdes) e o 3 fica Ativo (Vermelho)
+                updateStepIndicator(true, true, false);
+            }
         });
         
-        // 3. Listener para o botão (ÚNICO ponto que chama a navegação)
+        // 3. Listener para o botão
         btnIr.addEventListener('click', navigateToForms);
 
-        // Inicializa o estado (Passo 1 Ativo, Passo 2 Oculto)
-        updateLocalOptions();
-        updateStepIndicator(false, false); // Garante que começa no passo 1
+        // INICIALIZAÇÃO DO SISTEMA
+        // Começa apenas com o Passo 1 (Escolha de Fluxo) ativo
+        updateStepIndicator(false, false, false);
     });
 </script>
 
