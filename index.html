@@ -558,62 +558,108 @@
         // Novo Listener para o primeiro passo (Escolha da Ação)
         fluxoSelect.addEventListener('change', function() {
             fluxoSelecionado = fluxoSelect.value;
+    
+    if (fluxoSelecionado) {
+        // 1. Reseta os selects seguintes para evitar que dados antigos apareçam
+        postoSelect.value = "";
+        localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>';
+        btnIr.disabled = true;
+
+        // 2. Esconde o Passo 1 e exibe o Passo 2 (O select de Postos/Categorias)
+        document.getElementById('step-0-content').style.display = 'none';
+        document.getElementById('step-1-content').style.display = 'block';
+        
+        // 3. Garante que o Passo 3 esteja escondido até que o Passo 2 seja escolhido
+        document.getElementById('step-2-content').style.display = 'none';
+        
+        // 4. Atualiza o indicador visual: Passo 1 concluído
+        updateStepIndicator(true, false, false);
+    }
+});
+        
+        function updateLocalOptions() {
+    const selectedPosto = postoSelect.value;
+    
+    // Limpa o select do Passo 3
+    localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>'; 
+    
+    if (selectedPosto) {
+        // Escolhe o mapa (viaturasMap ou formsMap) baseado na ação do Passo 1
+        const mapaAtual = (fluxoSelecionado === 'MATERIAIS') ? formsMap : viaturasMap;
+        const itens = mapaAtual[selectedPosto];
+        
+        if (itens) {
+            for (const nome in itens) {
+                const option = document.createElement('option');
+                option.value = itens[nome];
+                option.textContent = nome;
+                localSelect.appendChild(option);
+            }
+            
+            // Exibe o Passo 3 e o botão
+            document.getElementById('step-2-content').style.display = 'block';
+            updateStepIndicator(true, true, false);
+        }
+    }
+}
+
+      // 1. Listener para o NOVO Passo 1 (Escolha da Ação: Materiais ou Viaturas)
+        fluxoSelect.addEventListener('change', function() {
+            fluxoSelecionado = fluxoSelect.value;
             
             if (fluxoSelecionado) {
-                // Esconde o select atual e mostra o próximo (Posto)
+                // Reseta os passos seguintes para um novo início limpo
+                postoSelect.value = "";
+                localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>';
+                btnIr.disabled = true;
+
+                // Transição: Mostra o Passo 2 e esconde o resto
                 document.getElementById('step-0-content').style.display = 'none';
                 document.getElementById('step-1-content').style.display = 'block';
+                document.getElementById('step-2-content').style.display = 'none';
                 
-                // Marca o Passo 1 como concluído e o 2 como ativo
+                // Indicador: Passo 1 Completo (Verde), demais inativos
                 updateStepIndicator(true, false, false);
             }
         });
-        
-        function updateLocalOptions() {
-            const selectedPosto = postoSelect.value;
-            localSelect.innerHTML = '<option value="" disabled selected>-- Selecione um Local/VTR --</option>'; 
+
+        // 2. Listener para o Passo 2 (Posto de Serviço)
+        postoSelect.addEventListener('change', function() {
+            // A função updateLocalOptions já deve conter a lógica de popular o localSelect
+            updateLocalOptions();
             
-            if (selectedPosto) {
-                // Seleciona o mapa baseado na escolha do Passo 0
-                const mapaAtual = (fluxoSelecionado === 'MATERIAIS') ? formsMap : viaturasMap;
-                const locais = mapaAtual[selectedPosto];
-                
-                if (locais) {
-                    for (const name in locais) {
-                        const option = document.createElement('option');
-                        option.value = locais[name];
-                        option.textContent = name;
-                        localSelect.appendChild(option);
-                    }
-                    step2Content.style.display = 'block';
-                    updateStepIndicator(true, true, false);
-                }
-            } else {
-                step2Content.style.display = 'none';
-            }
-        }
+            // Transição: Mostra o Passo 3
+            document.getElementById('step-2-content').style.display = 'block';
+            
+            // Indicador: Passo 1 e 2 Completos (Verdes)
+            updateStepIndicator(true, true, false);
+        });
 
-        // 1. Listener para o menu 'Posto de Serviço'
-        postoSelect.addEventListener('change', updateLocalOptions);
-
-        // 2. Listener para o menu 'Local'
+        // 3. Listener para o Passo 3 (Local / VTR)
         localSelect.addEventListener('change', function() {
             const isLocalSelected = !!localSelect.value;
             btnIr.disabled = !isLocalSelected;
             
             if (isLocalSelected) {
-                // Se escolheu o local, Passo 1 e 2 estão completos (Verdes) e o 3 fica Ativo (Vermelho)
+                // Muda o texto do botão dinamicamente para ficar mais intuitivo
+                btnIr.textContent = (fluxoSelecionado === 'MATERIAIS') ? 'INICIAR CONFERÊNCIA' : 'INICIAR CHECKLIST';
+                
+                // Indicador: Todos os passos validados, o 3 fica em destaque (Vermelho/Ativo)
                 updateStepIndicator(true, true, false);
             }
         });
         
-        // 3. Listener para o botão
+        // 4. Listener para o botão de navegação
         btnIr.addEventListener('click', navigateToForms);
 
         // INICIALIZAÇÃO DO SISTEMA
-        // Começa apenas com o Passo 1 (Escolha de Fluxo) ativo
+        // Garante que apenas o Passo 1 apareça ao carregar
+        document.getElementById('step-0-content').style.display = 'block';
+        document.getElementById('step-1-content').style.display = 'none';
+        document.getElementById('step-2-content').style.display = 'none';
+        
+        // Círculos do indicador começam todos neutros/cinza
         updateStepIndicator(false, false, false);
-    });
 </script>
 
 </body>
