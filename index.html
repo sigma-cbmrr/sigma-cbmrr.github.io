@@ -139,7 +139,6 @@
                 <option value="RORAINÓPOLIS">RORAINÓPOLIS</option>
                 <option value="PACARAIMA">PACARAIMA</option>
                 <option value="BIOMA">OP. VERÃO SEM FOGO</option>
-                <option value="CEMAN">CEMAN</option>
             </select>
         </div>
     </div>
@@ -187,9 +186,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. MAPAS DE DADOS
     // Lógica de Checklist de Viatura (Espaço reservado para você alimentar)
     const viaturasChecklistMap = {
-        'ABT-17 (ALFA)': 'https://docs.google.com/forms/d/e/1FAIpQLScaIN4xEGq0FP_5s4cyMUP-OSqLyh9QZiUUAj1v2nMzymXfwg/viewform',
-        'RESGATE (ALFA)': 'https://docs.google.com/forms/d/e/1FAIpQLSe2CuhwbeVTt5OCm6nqWdM-kB0Xv-rChzmkA8byBqil7kHRdg/viewform',
-        'ABT-18 (BRAVO)': 'https://docs.google.com/forms/d/e/1FAIpQLSctaCjNUB2gDdNDXn3h4RiGOoch94CvAC5sj15D8YgzPT8Z9w/viewform',
+        'CEMAN ENTRADA/SAÍDA': 'https://forms.gle/mNth7r2YhEmXHisr6',
+        'POSTO CHARLIE ENTRADA/SAÍDA': 'https://forms.gle/vLqARvwJJzKujbip6',
+        'OP. VERÃO SEM FOGO': 'https://forms.gle/SWUQsoDtPQ9fhfZP8',
         // Adicione novas viaturas aqui abaixo seguindo o padrão 'NOME': 'LINK'
     };
 
@@ -209,8 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         'CHARLIE': {
             'VTR SALVAMENTO': 'https://docs.google.com/forms/d/e/1FAIpQLSfzEdboDDlJJ24oYcr3uIgWxemDzbBfIn8YqQBMJag7A-eqWA/viewform',
-            'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSdEpX-ak7Lv3VQSXNkw0JeMGndJfc97Ac_3PhO95M67UHJ3Dw/viewform',
-            'CHECKLIST DE VTR': 'https://forms.gle/vLqARvwJJzKujbip6'
+            'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSdEpX-ak7Lv3VQSXNkw0JeMGndJfc97Ac_3PhO95M67UHJ3Dw/viewform'
         },
         'FOXTROT': {
             'GCIF': 'https://forms.gle/Jk6hZnfEWhhPBTun6',
@@ -218,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'CARACARAÍ': {
             'ABT-16': 'https://docs.google.com/forms/d/e/1FAIpQLScuEX-onfOntuiCrccAj5IcPHmgijyL6bTTgFxRDH6c4VPjDg/viewform',
             'UR 06-23': 'https://docs.google.com/forms/d/e/1FAIpQLSdPS0HfYfTcQ1w-Wd2a8r1PGsd4U3DplCA1fCf6bPNNDrogUQ/viewform',
-            'GCIF': 'https://docs.google.com/forms/d/e/1FAIpQLSchXqGfiGeTDC2hIpnxgxIGLkxKZziYE5go7pVcYYHGnpj9ow/viewform',
+            'GCIF': 'https://forms.gle/NWarewZhFaMSwF2x7',
             'GBS': 'https://docs.google.com/forms/d/e/1FAIpQLSdWgjlqDH6Dt2DwM7qRgMAeC2SOSIPShCDVBZXX-T5peyu8TA/viewform',
             'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLScW4_vbkqZVKtNM02BBFMkMdpZStX-FF9OIEQkhrPS0ThVVgg/viewform'
         },
@@ -239,11 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'IRACEMA': 'https://forms.gle/gJXQMgWwMgUeRvp47',
             'MUCAJAÍ': 'https://forms.gle/iymgcguuJ1G6mDc1A',
             'MUCAJAí (Apiaú)': 'https://forms.gle/yQoCAnMsSAEYWcEq9',
-            'GCIF EXTRA': 'https://forms.gle/CAJtxDnKd77BVc1H8',
-            'CHECKLIST DE VTR': 'https://forms.gle/SWUQsoDtPQ9fhfZP8'
-        },
-        'CEMAN': {
-            'NOVO CHECKLIST DE VTR': 'https://forms.gle/mNth7r2YhEmXHisr6'
+            'GCIF EXTRA': 'https://forms.gle/CAJtxDnKd77BVc1H8'
         }
     };
 
