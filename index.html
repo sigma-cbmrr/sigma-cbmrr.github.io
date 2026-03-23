@@ -445,221 +445,177 @@
 
 
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-       const fluxoSelect = document.getElementById('fluxo-select');
-        const postoSelect = document.getElementById('posto-servico');
-        const localSelect = document.getElementById('local');
-        const btnIr = document.getElementById('btn-ir');
-        const step1Content = document.getElementById('step-1-content'); // NOVO
-        const step2Content = document.getElementById('step-2-content');
-        
-        // Novos elementos do passo a passo
-        const stepIndicator = document.getElementById('step-indicator');
-        const stepItem0 = document.getElementById('step-item-0'); // ADICIONADO
-        const stepItem1 = document.getElementById('step-item-1');
-        const stepItem2 = document.getElementById('step-item-2');
-        let fluxoSelecionado = '';
-        
-        const viaturasMap = {
-            'ALFA': {
-                'ABT-17 (VTR)': 'LINK_FORMS_VTR_ALFA_1',
-                'RESGATE (VTR)': 'LINK_FORMS_VTR_ALFA_2'
-            },
-            'BRAVO': {
-                'ABT-18 (VTR)': 'LINK_FORMS_VTR_BRAVO_1'
-            },
-            // Adicione os outros postos seguindo o mesmo padrão...
-        };
-        
-        const formsMap = {
-            'ALFA': {
-                'ABT-17': 'https://docs.google.com/forms/d/e/1FAIpQLScaIN4xEGq0FP_5s4cyMUP-OSqLyh9QZiUUAj1v2nMzymXfwg/viewform',
-                'RESGATE': 'https://docs.google.com/forms/d/e/1FAIpQLSe2CuhwbeVTt5OCm6nqWdM-kB0Xv-rChzmkA8byBqil7kHRdg/viewform',
-                'VTR CMD SOS': 'https://docs.google.com/forms/d/e/1FAIpQLSdGEdJBqe9Qadvv5TT5QfZ3Zc2KqJcbGcqwGUut0q796TJnXg/viewform',
-                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSckUGLpBsCIM_nFFS-BCPhAKbrI4CU5p6zo0juwy0Orcu0nTg/viewform',
-                'RESGATE EXTRA': 'https://docs.google.com/forms/d/e/1FAIpQLSf5TJ8w6_6DWTr1oxXgZFPIOuC0_jvpcJMF4ciqRJloaSk5WQ/viewform',
-                'GCIF': 'https://forms.gle/gkr5NCvUNg3PVvTD9'
-            },
-            'BRAVO': {
-                'ABT-18': 'https://docs.google.com/forms/d/e/1FAIpQLSctaCjNUB2gDdNDXn3h4RiGOoch94CvAC5sj15D8YgzPT8Z9w/viewform',
-                'AT 02-16': 'https://forms.gle/6Fr29ANnMDVFnLXD7',
-                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSd4paOCzbr3mjS3DEoFOBwmVTjVOrvk6NfspYJ-p1XcNtD7bg/viewform'
-            },
-            'CHARLIE': {
-                'VTR SALVAMENTO': 'https://docs.google.com/forms/d/e/1FAIpQLSfzEdboDDlJJ24oYcr3uIgWxemDzbBfIn8YqQBMJag7A-eqWA/viewform',
-                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSdEpX-ak7Lv3VQSXNkw0JeMGndJfc97Ac_3PhO95M67UHJ3Dw/viewform',
-                'CHECKLIST DE VTR': 'https://forms.gle/vLqARvwJJzKujbip6'
-            },
-            'FOXTROT': {
-                'GCIF': 'https://forms.gle/Jk6hZnfEWhhPBTun6',
-            },
-            'CARACARAÍ': {
-                'ABT-16': 'https://docs.google.com/forms/d/e/1FAIpQLScuEX-onfOntuiCrccAj5IcPHmgijyL6bTTgFxRDH6c4VPjDg/viewform',
-                'UR 06-23': 'https://docs.google.com/forms/d/e/1FAIpQLSdPS0HfYfTcQ1w-Wd2a8r1PGsd4U3DplCA1fCf6bPNNDrogUQ/viewform',
-                'GCIF': 'https://docs.google.com/forms/d/e/1FAIpQLSchXqGfiGeTDC2hIpnxgxIGLkxKZziYE5go7pVcYYHGnpj9ow/viewform',
-                'GBS': 'https://docs.google.com/forms/d/e/1FAIpQLSdWgjlqDH6Dt2DwM7qRgMAeC2SOSIPShCDVBZXX-T5peyu8TA/viewform',
-                'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLScW4_vbkqZVKtNM02BBFMkMdpZStX-FF9OIEQkhrPS0ThVVgg/viewform'
-            },
-            'RORAINÓPOLIS': {
-                'ABT-15': 'https://docs.google.com/forms/d/e/1FAIpQLSdbGEFe2CMF_56N5QyXsoNHfBWlokvYTRf5s48_T84T_srt_w/viewform',
-                'UR 09-23': 'https://docs.google.com/forms/d/e/1FAIpQLScRW_T3DEMt0OLOjBD_gGxM3gSUW_igGN0KIJPXjMYTn8C62A/viewform'
-            },
-            'PACARAIMA': {
-                'POSTO PACARAIMA': 'LINK_DO_FORMS_PACARAIMA'
-            },
-            'BIOMA': {
-                'ALTO ALEGRE': 'https://forms.gle/vMVQKWVFwkG9a21WA',
-                'AMAJARÍ': 'https://forms.gle/9GKqkmApHGgaqVLZ7',
-                'BONFIM': 'https://forms.gle/Fxr7weGV1nCaG69g9',
-                'BALIZA': 'https://forms.gle/NBnpsKwV8DDWixN49',
-                'CANTÁ': 'https://forms.gle/HB5WEwc9E9bokZAM8',
-                'CANTÁ (Félix Pinto)': 'https://forms.gle/K3bp12A5P231btpo8',
-                'IRACEMA': 'https://forms.gle/gJXQMgWwMgUeRvp47',
-                'MUCAJAÍ': 'https://forms.gle/iymgcguuJ1G6mDc1A',
-                'MUCAJAí (Apiaú)': 'https://forms.gle/yQoCAnMsSAEYWcEq9',
-                'GCIF EXTRA': 'https://forms.gle/CAJtxDnKd77BVc1H8',
-                'CHECKLIST DE VTR': 'https://forms.gle/SWUQsoDtPQ9fhfZP8'
-                
-            },
-            'CEMAN': {
-                'NOVO CHECKLIST DE VTR': 'https://forms.gle/mNth7r2YhEmXHisr6'
-            }
-        };
-
-        function navigateToForms() {
-            const formsLink = localSelect.value;
-            if (formsLink && formsLink.startsWith('http')) {
-                localSelect.blur(); 
-                window.open(formsLink, '_blank');
-            } else if (formsLink.includes('LINK_DO_FORMS')) {
-                // Mensagem de erro no console, pois alert() é desabilitado
-                console.error('Atenção: O link para ' + localSelect.options[localSelect.selectedIndex].text + ' ainda não foi configurado.');
-            }
-        }
-        
-        // Função para atualizar o status visual dos passos
-        function updateStepIndicator(p0, p1, p2) {
-            const indicator = document.getElementById('step-indicator');
-            const it0 = document.getElementById('step-item-0');
-            const it1 = document.getElementById('step-item-1');
-            const it2 = document.getElementById('step-item-2');
-
-            // Lógica de classes: Define quem é Verde (complete) ou Vermelho (active)
-            it0.className = 'step-item ' + (p0 ? 'complete' : 'active');
-            it1.className = 'step-item ' + (p1 ? 'complete' : (p0 ? 'active' : ''));
-            it2.className = 'step-item ' + (p2 ? 'complete' : (p1 ? 'active' : ''));
-
-            // Controla a linha de progresso
-            indicator.className = 'step-indicator';
-            if (p2) indicator.classList.add('progress-2');
-            else if (p1) indicator.classList.add('progress-1');
-        }
-
-        // Novo Listener para o primeiro passo (Escolha da Ação)
-        fluxoSelect.addEventListener('change', function() {
-            fluxoSelecionado = fluxoSelect.value;
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. REFERÊNCIAS DOS ELEMENTOS
+    const fluxoSelect = document.getElementById('fluxo-select');
+    const postoSelect = document.getElementById('posto-servico');
+    const localSelect = document.getElementById('local');
+    const btnIr = document.getElementById('btn-ir');
     
-    if (fluxoSelecionado) {
-        // 1. Reseta os selects seguintes para evitar que dados antigos apareçam
-        postoSelect.value = "";
-        localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>';
-        btnIr.disabled = true;
+    const step0Content = document.getElementById('step-0-content');
+    const step1Content = document.getElementById('step-1-content');
+    const step2Content = document.getElementById('step-2-content');
+    
+    const stepIndicator = document.getElementById('step-indicator');
+    const stepItem0 = document.getElementById('step-item-0');
+    const stepItem1 = document.getElementById('step-item-1');
+    const stepItem2 = document.getElementById('step-item-2');
 
-        // 2. Esconde o Passo 1 e exibe o Passo 2 (O select de Postos/Categorias)
-        document.getElementById('step-0-content').style.display = 'none';
-        document.getElementById('step-1-content').style.display = 'block';
-        
-        // 3. Garante que o Passo 3 esteja escondido até que o Passo 2 seja escolhido
-        document.getElementById('step-2-content').style.display = 'none';
-        
-        // 4. Atualiza o indicador visual: Passo 1 concluído
-        updateStepIndicator(true, false, false);
+    let fluxoSelecionado = '';
+
+    // 2. MAPAS DE DADOS
+    const viaturasMap = {
+        'ALFA': {
+            'ABT-17 (VTR)': 'LINK_FORMS_VTR_ALFA_1',
+            'RESGATE (VTR)': 'LINK_FORMS_VTR_ALFA_2'
+        },
+        'BRAVO': {
+            'ABT-18 (VTR)': 'LINK_FORMS_VTR_BRAVO_1'
+        }
+    };
+
+    const formsMap = {
+        'ALFA': {
+            'ABT-17': 'https://docs.google.com/forms/d/e/1FAIpQLScaIN4xEGq0FP_5s4cyMUP-OSqLyh9QZiUUAj1v2nMzymXfwg/viewform',
+            'RESGATE': 'https://docs.google.com/forms/d/e/1FAIpQLSe2CuhwbeVTt5OCm6nqWdM-kB0Xv-rChzmkA8byBqil7kHRdg/viewform',
+            'VTR CMD SOS': 'https://docs.google.com/forms/d/e/1FAIpQLSdGEdJBqe9Qadvv5TT5QfZ3Zc2KqJcbGcqwGUut0q796TJnXg/viewform',
+            'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSckUGLpBsCIM_nFFS-BCPhAKbrI4CU5p6zo0juwy0Orcu0nTg/viewform',
+            'RESGATE EXTRA': 'https://docs.google.com/forms/d/e/1FAIpQLSf5TJ8w6_6DWTr1oxXgZFPIOuC0_jvpcJMF4ciqRJloaSk5WQ/viewform',
+            'GCIF': 'https://forms.gle/gkr5NCvUNg3PVvTD9'
+        },
+        'BRAVO': {
+            'ABT-18': 'https://docs.google.com/forms/d/e/1FAIpQLSctaCjNUB2gDdNDXn3h4RiGOoch94CvAC5sj15D8YgzPT8Z9w/viewform',
+            'AT 02-16': 'https://forms.gle/6Fr29ANnMDVFnLXD7',
+            'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSd4paOCzbr3mjS3DEoFOBwmVTjVOrvk6NfspYJ-p1XcNtD7bg/viewform'
+        },
+        'CHARLIE': {
+            'VTR SALVAMENTO': 'https://docs.google.com/forms/d/e/1FAIpQLSfzEdboDDlJJ24oYcr3uIgWxemDzbBfIn8YqQBMJag7A-eqWA/viewform',
+            'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLSdEpX-ak7Lv3VQSXNkw0JeMGndJfc97Ac_3PhO95M67UHJ3Dw/viewform',
+            'CHECKLIST DE VTR': 'https://forms.gle/vLqARvwJJzKujbip6'
+        },
+        'FOXTROT': {
+            'GCIF': 'https://forms.gle/Jk6hZnfEWhhPBTun6',
+        },
+        'CARACARAÍ': {
+            'ABT-16': 'https://docs.google.com/forms/d/e/1FAIpQLScuEX-onfOntuiCrccAj5IcPHmgijyL6bTTgFxRDH6c4VPjDg/viewform',
+            'UR 06-23': 'https://docs.google.com/forms/d/e/1FAIpQLSdPS0HfYfTcQ1w-Wd2a8r1PGsd4U3DplCA1fCf6bPNNDrogUQ/viewform',
+            'GCIF': 'https://docs.google.com/forms/d/e/1FAIpQLSchXqGfiGeTDC2hIpnxgxIGLkxKZziYE5go7pVcYYHGnpj9ow/viewform',
+            'GBS': 'https://docs.google.com/forms/d/e/1FAIpQLSdWgjlqDH6Dt2DwM7qRgMAeC2SOSIPShCDVBZXX-T5peyu8TA/viewform',
+            'PERMANÊNCIA': 'https://docs.google.com/forms/d/e/1FAIpQLScW4_vbkqZVKtNM02BBFMkMdpZStX-FF9OIEQkhrPS0ThVVgg/viewform'
+        },
+        'RORAINÓPOLIS': {
+            'ABT-15': 'https://docs.google.com/forms/d/e/1FAIpQLSdbGEFe2CMF_56N5QyXsoNHfBWlokvYTRf5s48_T84T_srt_w/viewform',
+            'UR 09-23': 'https://docs.google.com/forms/d/e/1FAIpQLScRW_T3DEMt0OLOjBD_gGxM3gSUW_igGN0KIJPXjMYTn8C62A/viewform'
+        },
+        'PACARAIMA': {
+            'POSTO PACARAIMA': 'LINK_DO_FORMS_PACARAIMA'
+        },
+        'BIOMA': {
+            'ALTO ALEGRE': 'https://forms.gle/vMVQKWVFwkG9a21WA',
+            'AMAJARÍ': 'https://forms.gle/9GKqkmApHGgaqVLZ7',
+            'BONFIM': 'https://forms.gle/Fxr7weGV1nCaG69g9',
+            'BALIZA': 'https://forms.gle/NBnpsKwV8DDWixN49',
+            'CANTÁ': 'https://forms.gle/HB5WEwc9E9bokZAM8',
+            'CANTÁ (Félix Pinto)': 'https://forms.gle/K3bp12A5P231btpo8',
+            'IRACEMA': 'https://forms.gle/gJXQMgWwMgUeRvp47',
+            'MUCAJAÍ': 'https://forms.gle/iymgcguuJ1G6mDc1A',
+            'MUCAJAí (Apiaú)': 'https://forms.gle/yQoCAnMsSAEYWcEq9',
+            'GCIF EXTRA': 'https://forms.gle/CAJtxDnKd77BVc1H8',
+            'CHECKLIST DE VTR': 'https://forms.gle/SWUQsoDtPQ9fhfZP8'
+        },
+        'CEMAN': {
+            'NOVO CHECKLIST DE VTR': 'https://forms.gle/mNth7r2YhEmXHisr6'
+        }
+    };
+
+    // 3. FUNÇÕES DE LÓGICA
+    function updateStepIndicator(p0, p1, p2) {
+        stepItem0.className = 'step-item ' + (p0 ? 'complete' : 'active');
+        stepItem1.className = 'step-item ' + (p1 ? 'complete' : (p0 ? 'active' : ''));
+        stepItem2.className = 'step-item ' + (p2 ? 'complete' : (p1 ? 'active' : ''));
+
+        stepIndicator.className = 'step-indicator';
+        if (p2) stepIndicator.classList.add('progress-2');
+        else if (p1) stepIndicator.classList.add('progress-1');
     }
-});
+
+    function updateLocalOptions() {
+        const selectedPosto = postoSelect.value;
+        localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>'; 
         
-        function updateLocalOptions() {
-    const selectedPosto = postoSelect.value;
-    
-    // Limpa o select do Passo 3
-    localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>'; 
-    
-    if (selectedPosto) {
-        // Escolhe o mapa (viaturasMap ou formsMap) baseado na ação do Passo 1
-        const mapaAtual = (fluxoSelecionado === 'MATERIAIS') ? formsMap : viaturasMap;
-        const itens = mapaAtual[selectedPosto];
-        
-        if (itens) {
-            for (const nome in itens) {
-                const option = document.createElement('option');
-                option.value = itens[nome];
-                option.textContent = nome;
-                localSelect.appendChild(option);
-            }
+        if (selectedPosto) {
+            const mapaAtual = (fluxoSelecionado === 'MATERIAIS') ? formsMap : viaturasMap;
+            const itens = mapaAtual[selectedPosto];
             
-            // Exibe o Passo 3 e o botão
-            document.getElementById('step-2-content').style.display = 'block';
-            updateStepIndicator(true, true, false);
-        }
-    }
-}
-
-      // 1. Listener para o NOVO Passo 1 (Escolha da Ação: Materiais ou Viaturas)
-        fluxoSelect.addEventListener('change', function() {
-            fluxoSelecionado = fluxoSelect.value;
-            
-            if (fluxoSelecionado) {
-                // Reseta os passos seguintes para um novo início limpo
-                postoSelect.value = "";
-                localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>';
-                btnIr.disabled = true;
-
-                // Transição: Mostra o Passo 2 e esconde o resto
-                document.getElementById('step-0-content').style.display = 'none';
-                document.getElementById('step-1-content').style.display = 'block';
-                document.getElementById('step-2-content').style.display = 'none';
-                
-                // Indicador: Passo 1 Completo (Verde), demais inativos
-                updateStepIndicator(true, false, false);
-            }
-        });
-
-        // 2. Listener para o Passo 2 (Posto de Serviço)
-        postoSelect.addEventListener('change', function() {
-            // A função updateLocalOptions já deve conter a lógica de popular o localSelect
-            updateLocalOptions();
-            
-            // Transição: Mostra o Passo 3
-            document.getElementById('step-2-content').style.display = 'block';
-            
-            // Indicador: Passo 1 e 2 Completos (Verdes)
-            updateStepIndicator(true, true, false);
-        });
-
-        // 3. Listener para o Passo 3 (Local / VTR)
-        localSelect.addEventListener('change', function() {
-            const isLocalSelected = !!localSelect.value;
-            btnIr.disabled = !isLocalSelected;
-            
-            if (isLocalSelected) {
-                // Muda o texto do botão dinamicamente para ficar mais intuitivo
-                btnIr.textContent = (fluxoSelecionado === 'MATERIAIS') ? 'INICIAR CONFERÊNCIA' : 'INICIAR CHECKLIST';
-                
-                // Indicador: Todos os passos validados, o 3 fica em destaque (Vermelho/Ativo)
+            if (itens) {
+                for (const nome in itens) {
+                    const option = document.createElement('option');
+                    option.value = itens[nome];
+                    option.textContent = nome;
+                    localSelect.appendChild(option);
+                }
+                // Exibe o Passo 3 e atualiza o indicador
+                step2Content.style.display = 'block';
                 updateStepIndicator(true, true, false);
             }
-        });
-        
-        // 4. Listener para o botão de navegação
-        btnIr.addEventListener('click', navigateToForms);
+        }
+    }
 
-        // INICIALIZAÇÃO DO SISTEMA
-        // Garante que apenas o Passo 1 apareça ao carregar
-        document.getElementById('step-0-content').style.display = 'block';
-        document.getElementById('step-1-content').style.display = 'none';
-        document.getElementById('step-2-content').style.display = 'none';
+    function navigateToForms() {
+        const formsLink = localSelect.value;
+        if (formsLink && formsLink.startsWith('http')) {
+            localSelect.blur(); 
+            window.open(formsLink, '_blank');
+        } else if (formsLink && formsLink.includes('LINK_DO_FORMS')) {
+            console.error('Atenção: O link ainda não foi configurado.');
+        }
+    }
+
+    // 4. LISTENERS (EVENTOS)
+    
+    // Mudança no Passo 1 (Ação)
+    fluxoSelect.addEventListener('change', function() {
+        fluxoSelecionado = fluxoSelect.value;
+        if (fluxoSelecionado) {
+            // Reseta campos dependentes
+            postoSelect.value = "";
+            localSelect.innerHTML = '<option value="" disabled selected>-- Selecione --</option>';
+            btnIr.disabled = true;
+
+            // Gerencia visibilidade
+            step0Content.style.display = 'none';
+            step1Content.style.display = 'block';
+            step2Content.style.display = 'none';
+            
+            updateStepIndicator(true, false, false);
+        }
+    });
+
+    // Mudança no Passo 2 (Posto)
+    postoSelect.addEventListener('change', function() {
+        updateLocalOptions();
+    });
+
+    // Mudança no Passo 3 (Local/VTR)
+    localSelect.addEventListener('change', function() {
+        const isLocalSelected = !!localSelect.value;
+        btnIr.disabled = !isLocalSelected;
         
-        // Círculos do indicador começam todos neutros/cinza
-        updateStepIndicator(false, false, false);
+        if (isLocalSelected) {
+            btnIr.textContent = (fluxoSelecionado === 'MATERIAIS') ? 'INICIAR CONFERÊNCIA' : 'INICIAR CHECKLIST';
+            // Opcional: considerar o passo 3 "ativo" (pode ajustar conforme estética desejada)
+            updateStepIndicator(true, true, false);
+        }
+    });
+
+    btnIr.addEventListener('click', navigateToForms);
+
+    // 5. INICIALIZAÇÃO
+    step0Content.style.display = 'block';
+    step1Content.style.display = 'none';
+    step2Content.style.display = 'none';
+    updateStepIndicator(false, false, false);
+});
 </script>
 
 </body>
