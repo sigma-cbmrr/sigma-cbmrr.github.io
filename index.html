@@ -196,7 +196,7 @@
                 <option value="BIOMA">OP. VERÃO SEM FOGO</option>
             </select>
         </div>
-        <button type="button" class="btn-secondary" onclick="voltar()">VOLTAR</button>
+        <button type="button" id="btn-voltar-step1" class="btn-secondary" onclick="voltar()">VOLTAR</button>
     </div>
 
     <div id="step-2-content" style="display: none;">
@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Se está no passo 2 de materiais, volta para o passo 1 (Escolher Posto)
                 step2Content.style.display = 'none';
                 step1Content.style.display = 'block';
+                document.getElementById('btn-voltar-step1').style.display = 'block';
                 updateStepIndicator(true, false, false);
                 
                 // Limpa a seleção do Local para obrigar a escolher novamente e trava o botão Iniciar
@@ -402,6 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 localSelect.appendChild(opt);
             }
             step2Content.style.display = 'block';
+            document.getElementById('btn-voltar-step1').style.display = 'none';
             updateStepIndicator(true, true, false);
         }
     });
