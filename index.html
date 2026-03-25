@@ -221,6 +221,8 @@
   <div class="footer-direito">
     <a href="https://wa.me/5595991206513" target="_blank" rel="noopener noreferrer">Ajuda</a>
     
+    <a href="SEU_LINK_DO_FORMS_AQUI" target="_blank" rel="noopener noreferrer">Elogios/Sugestões</a>
+    
     <a href="#" onclick="mostrarSobreSigma(); return false;">Sobre o SIGMA</a>
   </div>
 </footer>
@@ -371,32 +373,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // FUNÇÃO PARA EXIBIR O MODAL "SOBRE O SIGMA"
+// FUNÇÃO PARA EXIBIR O MODAL "SOBRE O SIGMA"
     window.mostrarSobreSigma = function() {
         Swal.fire({
             title: '<strong>Sobre o SIGMA</strong>',
             imageUrl: 'logo_sigma.png', // Aqui entra o seu logo
-            imageWidth: 80, // Tamanho elegante
+            imageWidth: 80,
             imageAlt: 'Logo SIGMA',
             html: `
                 <div style="text-align: justify; font-size: 0.95em; color: #444; line-height: 1.6; font-family: 'Segoe UI', Roboto, sans-serif;">
-                    <p>O <strong>Sistema Integrado de Gestão de Materiais (SIGMA)</strong> é uma solução tecnológica desenvolvida para otimizar, padronizar e modernizar a rotina operacional do Corpo de Bombeiros Militar de Roraima.</p>
+                    <p>Criado em <strong>março de 2025</strong>, o <strong>Sistema Integrado de Gestão de Materiais (SIGMA)</strong> é uma solução tecnológica em constante atualização, desenvolvida para otimizar, padronizar e modernizar a rotina operacional do Corpo de Bombeiros Militar de Roraima.</p>
                     
-                    <p>Construída com foco em eficiência e redução do uso de papel, a ferramenta é totalmente integrada ao ecossistema <strong>Google Workspace</strong>, operando através de quatro pilares principais:</p>
+                    <p>Construída com foco em eficiência e redução do uso de papel, a etapa atual da ferramenta é totalmente integrada ao ecossistema <strong>Google Workspace</strong>, operando através de quatro pilares principais:</p>
                     
-                    <ul style="text-align: left; padding-left: 20px; margin-top: 10px;">
+                    <ul style="text-align: left; padding-left: 20px; margin-top: 10px; margin-bottom: 15px;">
                         <li style="margin-bottom: 5px;"><strong>Google Forms:</strong> Captação ágil e padronizada das conferências e checklists em qualquer dispositivo.</li>
-                        <li style="margin-bottom: 5px;"><strong>Google Sheets:</strong> Centralização de dados, processamento de lógicas e formatação dos documentos padrão.</li>
-                        <li style="margin-bottom: 5px;"><strong>Google Apps Script:</strong> Motor de automação responsável por transformar os dados em relatórios PDF e realizar o disparo automático via e-mail.</li>
-                        <li><strong>Google Drive:</strong> Armazenamento seguro e estruturado em nuvem de todo o histórico de alterações diárias.</li>
+                        <li style="margin-bottom: 5px;"><strong>Google Sheets:</strong> Centralização de dados, processamento de lógicas e criação dos documentos padrão.</li>
+                        <li style="margin-bottom: 5px;"><strong>Google Apps Script:</strong> Motor de automação responsável por gerar os relatórios em PDF e realizar o envio automático via e-mail.</li>
+                        <li><strong>Google Drive:</strong> Armazenamento seguro em nuvem de todo o histórico diário.</li>
                     </ul>
+
+                    <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">Como parte de seu planejamento de evolução, o SIGMA está sendo preparado para transcender essas automações e se transformar em um <strong>sistema web robusto e independente</strong>, garantindo ainda mais recursos e escalabilidade para a tropa.</p>
                 </div>
             `,
             confirmButtonText: 'FECHAR',
-            confirmButtonColor: '#d90f23', // Vermelho padrão bombeiro
+            confirmButtonColor: '#d90f23',
             background: '#ffffff',
             customClass: {
-                popup: 'sigma-modal' // Classe caso queiramos estilizar mais depois
+                popup: 'sigma-modal'
             }
         });
     };
