@@ -59,42 +59,52 @@
     /* Ícones (Placeholder caso não use FontAwesome, usando tamanhos de fonte grandes para emojis) */
     .icon-large { font-size: 45px !important; margin-bottom: 5px; display: block; }
 
-    /* RODAPÉ E RESPONSIVIDADE */
-    .footer-sigma {
+   /* RODAPÉ E RESPONSIVIDADE */
+.footer-sigma {
+  position: fixed; /* Fixa o rodapé no fundo da página */
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Força a pegar a largura total da tela */
+  box-sizing: border-box; /* Impede que o padding quebre a largura */
   display: flex;
-  justify-content: space-between; /* Joga um item para cada lado */
-  align-items: center; /* Centraliza verticalmente */
-  padding: 15px 30px; /* Espaçamento interno (cima/baixo e laterais) */
-  background-color: #ffffff; /* Fundo branco como na imagem */
-  border-top: 1px solid #e0e0e0; /* Linha sutil separando o rodapé do conteúdo */
-  color: #5f6368; /* Cor do texto (cinza escuro) */
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  color: #5f6368;
   font-size: 14px;
-  font-family: inherit; /* Herda a fonte do projeto */
+  /* Nova família de fontes mais profissional e agradável (padrão de sistemas modernos) */
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  z-index: 100; /* Garante que fique acima de outros elementos */
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.03); /* Sombra bem sutil no topo do rodapé */
 }
 
 .footer-direito {
   display: flex;
-  gap: 25px; /* Espaço entre "Suporte" e "Sobre o SIGMA" */
+  gap: 25px;
 }
 
 .footer-direito a {
-  text-decoration: none; /* Remove o sublinhado padrão do link */
-  color: #5f6368; /* Mantém a cor dos links igual a do texto */
+  text-decoration: none;
+  color: #5f6368;
   transition: color 0.2s ease;
+  font-weight: 500; /* Deixa o link um pouco mais destacado */
 }
 
 .footer-direito a:hover {
-  color: #1a73e8; /* Fica azul (padrão Google/sistemas) ao passar o mouse */
+  color: #d90f23; /* Mudei para o vermelho do bombeiro no hover para combinar com o tema */
   text-decoration: underline;
 }
-    @media (min-width: 500px) {
-        body { padding-top: 70px; }
-        .container { padding: 30px; max-width: 500px; }
-        .logo { width: 100px; }
-        h1 { font-size: 1.8em; }
-        .card-choice { padding: 30px 15px; }
-        .card-choice span { font-size: 0.95em; }
-    }
+
+/* Ajuste para telas de celular pequenas (evita que os textos se espremam) */
+@media (max-width: 600px) {
+  .footer-sigma {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+}
 </style>
     
 </head>
