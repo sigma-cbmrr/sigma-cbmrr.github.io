@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Referência do Favicon restaurada para tentar carregar o arquivo, com fallback para placeholder -->
     <link rel="icon" type="image/png" href="logo_sigma.png" onerror="this.href='https://placehold.co/16x16/800020/ffffff?text=S'">
     <title>SIGMA - Conferência de Materiais</title>
@@ -218,9 +219,9 @@
   </div>
   
   <div class="footer-direito">
-    <a href="https://wa.me/5595991206513" target="_blank" rel="noopener noreferrer">Suporte</a>
+    <a href="https://wa.me/5595991206513" target="_blank" rel="noopener noreferrer">Ajuda</a>
     
-    <a href="#">Sobre o SIGMA</a>
+    <a href="#" onclick="mostrarSobreSigma(); return false;">Sobre o SIGMA</a>
   </div>
 </footer>
 
@@ -368,6 +369,36 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('card-materiais').classList.remove('selected');
             document.getElementById('card-viaturas').classList.remove('selected');
         }
+    };
+
+    // FUNÇÃO PARA EXIBIR O MODAL "SOBRE O SIGMA"
+    window.mostrarSobreSigma = function() {
+        Swal.fire({
+            title: '<strong>Sobre o SIGMA</strong>',
+            imageUrl: 'logo_sigma.png', // Aqui entra o seu logo
+            imageWidth: 80, // Tamanho elegante
+            imageAlt: 'Logo SIGMA',
+            html: `
+                <div style="text-align: justify; font-size: 0.95em; color: #444; line-height: 1.6; font-family: 'Segoe UI', Roboto, sans-serif;">
+                    <p>O <strong>Sistema Integrado de Gestão de Materiais (SIGMA)</strong> é uma solução tecnológica desenvolvida para otimizar, padronizar e modernizar a rotina operacional do Corpo de Bombeiros Militar de Roraima.</p>
+                    
+                    <p>Construída com foco em eficiência e redução do uso de papel, a ferramenta é totalmente integrada ao ecossistema <strong>Google Workspace</strong>, operando através de quatro pilares principais:</p>
+                    
+                    <ul style="text-align: left; padding-left: 20px; margin-top: 10px;">
+                        <li style="margin-bottom: 5px;"><strong>Google Forms:</strong> Captação ágil e padronizada das conferências e checklists em qualquer dispositivo.</li>
+                        <li style="margin-bottom: 5px;"><strong>Google Sheets:</strong> Centralização de dados, processamento de lógicas e formatação dos documentos padrão.</li>
+                        <li style="margin-bottom: 5px;"><strong>Google Apps Script:</strong> Motor de automação responsável por transformar os dados em relatórios PDF e realizar o disparo automático via e-mail.</li>
+                        <li><strong>Google Drive:</strong> Armazenamento seguro e estruturado em nuvem de todo o histórico de alterações diárias.</li>
+                    </ul>
+                </div>
+            `,
+            confirmButtonText: 'FECHAR',
+            confirmButtonColor: '#d90f23', // Vermelho padrão bombeiro
+            background: '#ffffff',
+            customClass: {
+                popup: 'sigma-modal' // Classe caso queiramos estilizar mais depois
+            }
+        });
     };
 
     function carregarViaturasChecklist() {
