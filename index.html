@@ -60,7 +60,33 @@
     .icon-large { font-size: 45px !important; margin-bottom: 5px; display: block; }
 
     /* RODAPÉ E RESPONSIVIDADE */
-    .footer-central { position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; padding: 5px 0; background-color: #f4f4f9; color: #555; font-size: 0.65em; z-index: 99; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+    .footer-sigma {
+  display: flex;
+  justify-content: space-between; /* Joga um item para cada lado */
+  align-items: center; /* Centraliza verticalmente */
+  padding: 15px 30px; /* Espaçamento interno (cima/baixo e laterais) */
+  background-color: #ffffff; /* Fundo branco como na imagem */
+  border-top: 1px solid #e0e0e0; /* Linha sutil separando o rodapé do conteúdo */
+  color: #5f6368; /* Cor do texto (cinza escuro) */
+  font-size: 14px;
+  font-family: inherit; /* Herda a fonte do projeto */
+}
+
+.footer-direito {
+  display: flex;
+  gap: 25px; /* Espaço entre "Suporte" e "Sobre o SIGMA" */
+}
+
+.footer-direito a {
+  text-decoration: none; /* Remove o sublinhado padrão do link */
+  color: #5f6368; /* Mantém a cor dos links igual a do texto */
+  transition: color 0.2s ease;
+}
+
+.footer-direito a:hover {
+  color: #1a73e8; /* Fica azul (padrão Google/sistemas) ao passar o mouse */
+  text-decoration: underline;
+}
     @media (min-width: 500px) {
         body { padding-top: 70px; }
         .container { padding: 30px; max-width: 500px; }
@@ -154,14 +180,17 @@
     </div>
 </div>
 
-<div class="footer-central">
-    <strong>GOVERNO DE RORAIMA</strong><br>
-    <strong>CORPO DE BOMBEIROS MILITAR DE RORAIMA</strong><br>
-    <em>“Amazônia: patrimônio dos brasileiros”</em><br>
-    <span class="footer-autor">
-        Elaborado por: 3º SGT QPCBM JHONATH
-    </span>
-</div>
+<footer class="footer-sigma">
+  <div class="footer-esquerdo">
+    Elaborado por: 3º SGT QPCBM JHONATH
+  </div>
+  
+  <div class="footer-direito">
+    <a href="https://wa.me/5595991206513" target="_blank" rel="noopener noreferrer">Suporte</a>
+    
+    <a href="#">Sobre o SIGMA</a>
+  </div>
+</footer>
 
 
 <script>
