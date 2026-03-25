@@ -96,6 +96,25 @@
   color: #d90f23; /* Mudei para o vermelho do bombeiro no hover para combinar com o tema */
   text-decoration: underline;
 }
+        /* BOTÃO SECUNDÁRIO (VOLTAR) */
+.btn-secondary { 
+    background-color: #f1f3f4; 
+    color: #555; 
+    border: 1px solid #ccc; 
+}
+.btn-secondary:hover:not(:disabled) { 
+    background-color: #e2e2e2; 
+}
+
+/* CONTAINER PARA BOTÕES LADO A LADO */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+.button-group button {
+    margin-top: 0; /* Remove a margem superior padrão do botão para alinhar na div */
+}
 
 /* Ajuste para telas de celular pequenas (evita que os textos se espremam) */
 @media (max-width: 600px) {
@@ -162,7 +181,7 @@
         </select>
     </div>
     
-    <div id="step-1-content" style="display: none;">
+<div id="step-1-content" style="display: none;">
         <div class="form-group">
             <label for="posto-servico">Escolha o Posto de Serviço</label>
             <select id="posto-servico">
@@ -177,6 +196,7 @@
                 <option value="BIOMA">OP. VERÃO SEM FOGO</option>
             </select>
         </div>
+        <button type="button" class="btn-secondary" onclick="voltar()">VOLTAR</button>
     </div>
 
     <div id="step-2-content" style="display: none;">
@@ -186,9 +206,11 @@
                 <option value="" disabled selected>-- Selecione --</option>
             </select>
         </div>
-        <button id="btn-ir" disabled>INICIAR</button>
+        <div class="button-group">
+            <button type="button" class="btn-secondary" style="flex: 1;" onclick="voltar()">VOLTAR</button>
+            <button id="btn-ir" disabled style="flex: 2;">INICIAR</button>
+        </div>
     </div>
-</div>
 
 <footer class="footer-sigma">
   <div class="footer-esquerdo">
@@ -304,6 +326,46 @@ document.addEventListener('DOMContentLoaded', function() {
             step1Content.style.display = 'none';
             step2Content.style.display = 'block';
             updateStepIndicator(true, true, false); 
+        }
+    };
+
+    // FUNÇÃO PARA VOLTAR ETAPAS
+    window.voltar = function() {
+        if (step2Content.style.display === 'block') {
+            if (fluxoSelecionado === 'MATERIAIS') {
+                // Se está no passo 2 de materiais, volta para o passo 1 (Escolher Posto)
+                step2Content.style.display = 'none';
+                step1Content.style.display = 'block';
+                updateStepIndicator(true, false, false);
+                
+                // Limpa a seleção do Local para obrigar a escolher novamente e trava o botão Iniciar
+                localSelect.value = "";
+                btnIr.disabled = true;
+                
+            } else if (fluxoSelecionado === 'VIATURAS') {
+                // Se está no passo 2 de viaturas, volta direto pro início (Passo 0)
+                step2Content.style.display = 'none';
+                step0Content.style.display = 'block';
+                updateStepIndicator(false, false, false);
+                fluxoSelecionado = ''; // Reseta o fluxo
+                
+                // Desmarca os cards visuais
+                document.getElementById('card-materiais').classList.remove('selected');
+                document.getElementById('card-viaturas').classList.remove('selected');
+            }
+        } else if (step1Content.style.display === 'block') {
+            // Se está no passo 1 (só o fluxo de Materiais passa por aqui), volta pro início (Passo 0)
+            step1Content.style.display = 'none';
+            step0Content.style.display = 'block';
+            updateStepIndicator(false, false, false);
+            fluxoSelecionado = ''; // Reseta o fluxo
+            
+            // Limpa o select do posto para não ficar pré-selecionado
+            postoSelect.value = ""; 
+            
+            // Desmarca os cards visuais
+            document.getElementById('card-materiais').classList.remove('selected');
+            document.getElementById('card-viaturas').classList.remove('selected');
         }
     };
 
